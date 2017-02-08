@@ -1,0 +1,15 @@
+Package: prospectinversion
+Title: PROSPECT inversion manuscript package
+Version: 0.0.0.9000
+Authors@R: person("Alexey", "Shiklomanov", email = "ashiklom@bu.edu", role = c('aut', 'cre'))
+Depends: 
+    methods,
+    PEcAnRTM,
+    dplyr,
+    tidyr,
+    dbhelpers
+License: The MIT License
+Encoding: UTF-8
+LaxyData: true
+RoxygenNote: 6.0.0
+Roxygen: list(markdown = TRUE)
