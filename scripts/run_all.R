@@ -1,3 +1,10 @@
+arg <- commandArgs(trailingOnly = TRUE)
+if (is.na(arg[1])) {
+    cmd <- 'qsub'
+} else {
+    cmd <- arg[1]
+}
+
 library(prospectinversion)
 specdb <- src_postgres('leaf_spectra')
 
@@ -26,15 +33,10 @@ samples_run <- samples_sub %>% distinct(samplecode, modelname)
 #test <- runInversion(db = specdb, samplecode = 
 
 for (i in seq_len(nrow(samples_run))) {
-    if (interactive()) {
-        cmd <- 'bash'
-        script <- 'submit_run.sh'
+    if (cmd == 'bash') {
         if (i > 3) break
-    } else {
-        cmd <- 'qsub'
-        script <- 'submit_run.sh'
     }
-    sys <- system2(cmd, c(script, 
+    sys <- system2(cmd, c('submit_run.sh', 
                           shQuote(samples_run[[i, 'samplecode']]), 
                           shQuote(samples_run[[i, 'modelname']])))
     if (sys != 0) {
