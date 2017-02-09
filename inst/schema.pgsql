@@ -10,3 +10,5 @@ CREATE TABLE results(
     ParameterQ500 numeric,
     ParameterQ975 numeric
 );
+
+GRANT INSERT ON TABLE results TO PUBLIC;
