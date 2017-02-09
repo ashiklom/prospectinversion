@@ -8,6 +8,9 @@ Depends:
     dplyr,
     tidyr,
     dbhelpers
+Remotes:
+    github::ashiklom/pecan/modules/rtm,
+    github::ashiklom/dbhelpers
 License: The MIT License
 Encoding: UTF-8
 LaxyData: true
