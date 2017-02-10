@@ -1,5 +1,5 @@
 library(prospectinversion)
-specdb <- src_postgres('leaf_spectra')
+source('dbConnect.R')
 
 if (!interactive()) {
     arg <- commandArgs(trailingOnly = TRUE)
