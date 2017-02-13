@@ -1,14 +1,27 @@
 library(prospectinversion)
 source('dbConnect.R')
 
-if (!interactive()) {
-    arg <- commandArgs(trailingOnly = TRUE)
-    samplecode <- arg[1]
-    modelname <- arg[2]
+arg <- commandArgs(trailingOnly = TRUE)
+if (is.na(arg[1])) {
+    runnum <- 1
 } else {
-    samplecode <- 'accp|92BHIS11SM1|1992'
-    modelname <- 'PROSPECT 4'
+    runnum <- as.numeric(arg[1])
 }
+
+source('build_runs_table.R')
+if (runnum > nruns) {
+    stop('Given run number ', runnum, 
+         ' but only ', nruns, 'available.')
+}
+
+samplecode <- samples_run[[runnum, 'samplecode']]
+modelname <- samples_run[[runnum, 'modelname']]
+
+message('About to start run number: ', runnum, '\n',
+        'Samplecode: ', samplecode, '\n',
+        'Modelname: ', modelname, '\n',
+        'Sleeping for 5 seconds...')
+Sys.sleep(5)
 
 stopifnot(!is.na(samplecode), !is.na(modelname))
 

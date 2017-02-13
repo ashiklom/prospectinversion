@@ -1,4 +1,2 @@
-specdb <- src_postgres(dbname = 'leaf_spectra',
-                       host = '128.197.168.115',
-                       port = 5432,
-                       user = 'ashiklom')
+specdb <- src_sqlite('~/dietzelab/curated-leafspec/leaf_spectra.db')
+DBI::dbGetQuery(specdb$con, 'PRAGMA foreign_keys = on;')

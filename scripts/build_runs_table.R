@@ -1,13 +1,5 @@
-arg <- commandArgs(trailingOnly = TRUE)
-if (is.na(arg[1])) {
-    cmd <- 'qsub'
-} else {
-    cmd <- arg[1]
-}
-
 library(prospectinversion)
 source('dbConnect.R')
-dir.create('logs', showWarnings = FALSE)
 
 samples_base <- tbl(specdb, 'spectra_info') %>%
     filter(spectratype %in% c('reflectance', 'pseudo-absorbance')) %>%
@@ -34,22 +26,10 @@ if (nrow(results) > 0) {
 samples_run <- samples_sub %>% 
     distinct(samplecode, modelname) %>%
     arrange(modelname)
+
 summary_table <- samples_run %>%
     group_by(modelname) %>%
     summarize(N = n())
-print(summary_table)
-message('Total runs to do: ', sum(summary_table$N))
-message('Sleeping for 5 seconds to give you a chance to cancel')
-Sys.sleep(5)
-
-for (i in seq_len(nrow(samples_run))) {
-    if (cmd == 'bash') {
-        if (i > 3) break
-    }
-    sys <- system2(cmd, c('submit_run.sh', 
-                          shQuote(samples_run[[i, 'samplecode']]), 
-                          shQuote(samples_run[[i, 'modelname']])))
-    if (sys != 0) {
-        stop('Error running command')
-    }
-}
+nruns <- sum(summary_table$N)
+print(summary_table) 
+message('Total runs to do: ', nruns)
