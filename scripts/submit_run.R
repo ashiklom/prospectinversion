@@ -8,7 +8,8 @@ if (is.na(arg[1])) {
     runnum <- as.numeric(arg[1])
 }
 
-source('build_runs_table.R')
+samples_run <- readRDS('runs_table.rds')
+nruns <- nrow(samples_run)
 if (runnum > nruns) {
     stop('Given run number ', runnum, 
          ' but only ', nruns, 'available.')
@@ -16,6 +17,15 @@ if (runnum > nruns) {
 
 samplecode <- samples_run[[runnum, 'samplecode']]
 modelname <- samples_run[[runnum, 'modelname']]
+n_results <- tbl(specdb, 'results') %>%
+    filter_(paste0('samplecode == ', shQuote(samplecode))) %>%
+    filter_(paste0('modelname == ', shQuote(modelname))) %>%
+    count %>%
+    collect %>%
+    .[['n']]
+if (n_results > 0) {
+    stop('Run found in results table. Skipping')
+}
 
 message('About to start run number: ', runnum, '\n',
         'Samplecode: ', samplecode, '\n',
@@ -25,13 +35,9 @@ Sys.sleep(5)
 
 stopifnot(!is.na(samplecode), !is.na(modelname))
 
-message('Running with the following arguments:\n',
-        'SampleCode: ', samplecode, '\n',
-        'Model: ', modelname)
-
 results <- runInversion(db = specdb, samplecode = samplecode, modelname = modelname)
 
-outdir <- 'results'
+outdir <- file.path('results', modelname)
 dir.create(outdir, showWarnings = FALSE)
 filename <- file.path(outdir, paste0(samplecode, '.rds'))
 saveRDS(object = results, file = filename)

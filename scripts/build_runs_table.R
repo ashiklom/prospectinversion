@@ -33,3 +33,5 @@ summary_table <- samples_run %>%
 nruns <- sum(summary_table$N)
 print(summary_table) 
 message('Total runs to do: ', nruns)
+
+saveRDS(samples_run, 'runs_table.rds')
