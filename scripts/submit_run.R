@@ -17,7 +17,7 @@ if (runnum > nruns) {
 
 samplecode <- samples_run[[runnum, 'samplecode']]
 modelname <- samples_run[[runnum, 'modelname']]
-n_results <- tbl(specdb, 'results') %>%
+n_results <- tbl(resultsdb, 'results') %>%
     filter_(paste0('samplecode == ', shQuote(samplecode))) %>%
     filter_(paste0('modelname == ', shQuote(modelname))) %>%
     count %>%

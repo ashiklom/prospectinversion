@@ -3,3 +3,6 @@ logs
 99.*
 results.sql
 .rds
+leaf_spectra.db
+results.db
+runs_table.rds

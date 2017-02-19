@@ -14,7 +14,7 @@ samples_p5b <- samples_base %>% mutate(modelname = 'PROSPECT 5B')
 samples_all <- full_join(samples_p4, samples_p5) %>%
     full_join(samples_p5b)
 
-results <- tbl(specdb, 'results') %>%
+results <- tbl(resultsdb, 'results') %>%
     distinct(samplecode, modelname) %>%
     collect()
 if (nrow(results) > 0) {
