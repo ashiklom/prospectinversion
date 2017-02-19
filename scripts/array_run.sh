@@ -4,6 +4,6 @@
 #$ -l h_rt=01:00:00
 #$ -j y
 #$ -o logs/
-#$ -t 1-14000
+#$ -t 1-11000
 
 Rscript submit_run.R $SGE_TASK_ID
