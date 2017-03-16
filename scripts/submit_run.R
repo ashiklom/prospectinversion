@@ -80,7 +80,7 @@ if (is.null(results$results)) {
                              .default = stat)) %>%
         spread(key = stat, value = values) %>%
         mutate(samplecode = samplecode, modelname = modelname) %>%
-        db_merge_into(db = specdb, table = 'results', values = .,
+        db_merge_into(db = resultsdb, table = 'results', values = .,
                       by = c('samplecode', 'parameter', 'modelname'),
                       id_colname = 'resultid')
 }

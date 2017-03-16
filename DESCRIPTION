@@ -14,5 +14,5 @@ Remotes:
 License: The MIT License
 Encoding: UTF-8
 LaxyData: true
-RoxygenNote: 6.0.0
+RoxygenNote: 6.0.1
 Roxygen: list(markdown = TRUE)

@@ -36,6 +36,10 @@ runInversion <- function(db, samplecode, modelname, custom_invert_options = NULL
                            adj_min = 0.05)
     if (spectratype == 'pseudo-absorbance') {
         model_allwl <- function(param) log10(1/rtm(param))
+    } else if (spectratype == 'continuum-removed reflectance') {
+        model_allwl <- function(param) {
+            prospectr::continuumRemoval(rtm(param), wav = 400:2500)
+        }
     } else {
         model_allwl <- function(param) rtm(param)
     }

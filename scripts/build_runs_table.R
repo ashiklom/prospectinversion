@@ -2,7 +2,7 @@ library(prospectinversion)
 source('dbConnect.R')
 
 samples_base <- tbl(specdb, 'spectra_info') %>%
-    filter(spectratype %in% c('reflectance', 'pseudo-absorbance')) %>%
+    filter(spectratype %in% c('reflectance', 'pseudo-absorbance', 'continuum-removed reflectance')) %>%
     inner_join(tbl(specdb, 'samples')) %>%
     distinct(samplecode) %>%
     collect()
